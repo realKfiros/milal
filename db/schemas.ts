@@ -15,7 +15,9 @@ export const BeautifulWords = mongoose.models.beautiful_words ?? mongoose.model(
 	message: String,
 	customIcon: String,
 	confetti: {
-		type: String,
-		get: (v: string) => JSON.parse(v || '{}'),
+		preset: String,
+		options: {
+			colors: Array,
+		}
 	},
 }));
