@@ -1,6 +1,6 @@
 import {action, computed, makeObservable, observable} from "mobx";
 import {game} from "./game.store.ts";
-import {GameStats} from "../interfaces/game_stats.ts";
+import {type GameStats} from "../interfaces/game_stats.ts";
 
 class StatsStore
 {
