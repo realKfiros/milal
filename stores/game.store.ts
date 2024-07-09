@@ -28,17 +28,7 @@ class GameStore
 		const gameState = localStorage.getItem("gameState");
 		if (!gameState || JSON.parse(gameState).day !== moment().format("YYYY-MM-DD"))
 		{
-			// this.state = {
-			// 	boardStatus: ["", "", "", "", "", ""],
-			// 	evaluations: [null, null, null, null, null],
-			// 	gameStatus: GameStatus.IN_PROGRESS,
-			// 	day: moment().format("YYYY-MM-DD"),
-			// 	hardMode: false,
-			// 	rowIndex: 0,
-			// 	solution: "בדיחה",
-			// };
-			// localStorage.setItem("gameState", JSON.stringify(this.state));
-			fetch('/api/today').then(response => response.json()).then(({data: todayWord}) =>
+			fetch('/api/today').then(response => response.json()).then(todayWord =>
 			{
 				this.state = {
 					boardStatus: ["", "", "", "", "", ""],
