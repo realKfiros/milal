@@ -69,8 +69,8 @@ export const App = observer(() =>
 		{
 			for (const mutation of mutations)
 			{
-				const successRemoved = Array.from(mutation.removedNodes).some(node => (node as HTMLElement).classList.contains('notify--success'));
-				const errorRemoved = Array.from(mutation.removedNodes).some(node => (node as HTMLElement).classList.contains('notify--error'));
+				const successRemoved = Array.from(mutation.removedNodes).some((node) => node instanceof HTMLElement && node.classList.contains('notify--success'));
+				const errorRemoved = Array.from(mutation.removedNodes).some(node => node instanceof HTMLElement && node.classList.contains('notify--error'));
 				if (mutation.type === 'childList' && (successRemoved || errorRemoved))
 				{
 					dialog.open(SummaryDialog);
@@ -81,6 +81,8 @@ export const App = observer(() =>
 		}));
 
 		observer.observe(document.body, {childList: true, subtree: true});
+
+		return () => observer.disconnect();
 	}, []);
 
 	useEffect(() =>

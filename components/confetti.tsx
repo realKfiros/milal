@@ -1,3 +1,4 @@
+'use client';
 import {useRef} from "react";
 import {observer} from "mobx-react-lite";
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
