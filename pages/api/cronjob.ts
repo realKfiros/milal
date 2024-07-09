@@ -9,24 +9,14 @@ type Data = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 {
+	// @ts-ignore
+	if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`)
+		return res.status(401).end('Unauthorized');
+
 	return new Promise<void>(async (resolve, reject) =>
 	{
 		try
 		{
-			if (req.method !== 'POST')
-			{
-				res.status(401).end();
-				resolve();
-			}
-
-			const ip = requestIp.getClientIp(req);
-
-			if (!(process.env.IP_WHITELIST || '').split(',').includes(ip || ''))
-			{
-				res.status(401).end();
-				resolve();
-			}
-
 			const today = await Days.exists({date: moment().format('YYYY-MM-DD')});
 			if (!today)
 			{
