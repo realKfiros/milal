@@ -21,7 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 			const ip = requestIp.getClientIp(req);
 
-			if (!(process.env.IP_WHITELIST || '').split(',').includes(ip))
+			if (!(process.env.IP_WHITELIST || '').split(',').includes(ip || ''))
 			{
 				res.status(401).end();
 				resolve();
