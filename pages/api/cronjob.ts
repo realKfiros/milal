@@ -17,13 +17,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 	{
 		try
 		{
-			const today = await Days.exists({date: moment().format('YYYY-MM-DD')});
+			const today = await Days.exists({date: moment().add(1, 'd').format('YYYY-MM-DD')});
 			if (!today)
 			{
 				const count = await Words.countDocuments();
 				const random = Math.floor(Math.random() * count);
 				const word = await Words.findOne().skip(random);
-				await Days.create({word_id: word._id, date: moment().format('YYYY-MM-DD')});
+				await Days.create({word_id: word._id, date: moment().add(1, 'd').format('YYYY-MM-DD')});
 			}
 			res.status(200).end();
 			resolve();
