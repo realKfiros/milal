@@ -9,10 +9,6 @@ type Data = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 {
-	// @ts-ignore
-	if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`)
-		return res.status(401).end('Unauthorized');
-
 	return new Promise<void>(async (resolve, reject) =>
 	{
 		try
