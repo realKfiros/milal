@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db_seed:
+    image: mongo:7.0.11
+    links:
+      - mongo
+    volumes:
+      - ./data:/data
+    command: /data/init-mongo.sh
+  mongo:
+    image: mongo:7.0.11
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data
+
+volumes:
+  mongo-data:
