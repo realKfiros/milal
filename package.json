@@ -32,7 +32,6 @@
     "react-dom": "^18",
     "react-simple-keyboard": "^3.7.131",
     "reflect-metadata": "^0.2.2",
-    "request-ip": "^3.3.0",
     "simple-keyboard-layouts": "^3.4.1",
     "simple-notify": "^1.0.4"
   },

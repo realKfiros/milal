@@ -1,6 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from "next";
 import {Days, Words} from "@/db/schemas.ts";
-import requestIp from 'request-ip';
 import moment from "moment";
 
 type Data = {
@@ -9,6 +8,8 @@ type Data = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 {
+	if (!process.env.CRON_SECRET || req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`)
+		return res.status(401).end();
 	return new Promise<void>(async (resolve, reject) =>
 	{
 		try
