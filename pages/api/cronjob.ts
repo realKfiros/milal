@@ -16,8 +16,6 @@ const generateRandomWord = async (day: moment.Moment) =>
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 {
-	if (!process.env.CRON_SECRET || req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`)
-		return res.status(401).end();
 	return new Promise<void>(async (resolve, reject) =>
 	{
 		try
