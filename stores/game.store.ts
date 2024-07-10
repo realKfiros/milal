@@ -8,6 +8,7 @@ import {stats} from "./stats.store.ts";
 import {shareOrCopy} from "@/components/share_or_copy.tsx";
 import {confetti} from "./confetti.store.ts";
 import {type GameState} from "@/interfaces/game_state.ts";
+import {Config} from "@/app_config.ts";
 
 class GameStore
 {
@@ -26,7 +27,7 @@ class GameStore
 	getTodayWord()
 	{
 		const gameState = localStorage.getItem("gameState");
-		if (!gameState || JSON.parse(gameState).day !== moment().format("YYYY-MM-DD") || JSON.parse(gameState).dictionary_version !== process.env.DICTIONARY_VERSION)
+		if (!gameState || JSON.parse(gameState).day !== moment().format("YYYY-MM-DD") || JSON.parse(gameState).dictionary_version !== Config.DICTIONARY_VERSION)
 		{
 			fetch('/api/today').then(response => response.json()).then(todayWord =>
 			{
@@ -38,7 +39,7 @@ class GameStore
 					hardMode: false,
 					rowIndex: 0,
 					solution: todayWord,
-					dictionary_version: process.env.DICTIONARY_VERSION,
+					dictionary_version: Config.DICTIONARY_VERSION,
 				};
 				localStorage.setItem("gameState", JSON.stringify(this.state));
 			});
