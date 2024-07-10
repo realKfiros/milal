@@ -6,6 +6,14 @@ type Data = {
 	name: string;
 };
 
+const generateRandomWord = async (day: moment.Moment) =>
+{
+	const count = await Words.countDocuments();
+	const random = Math.floor(Math.random() * count);
+	const word = await Words.findOne().skip(random);
+	await Days.create({word_id: word._id, date: day.format('YYYY-MM-DD')});
+};
+
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 {
 	if (!process.env.CRON_SECRET || req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`)
@@ -14,14 +22,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 	{
 		try
 		{
-			const today = await Days.exists({date: moment().add(1, 'd').format('YYYY-MM-DD')});
+			const today = await Days.exists({date: moment().format('YYYY-MM-DD')});
 			if (!today)
-			{
-				const count = await Words.countDocuments();
-				const random = Math.floor(Math.random() * count);
-				const word = await Words.findOne().skip(random);
-				await Days.create({word_id: word._id, date: moment().add(1, 'd').format('YYYY-MM-DD')});
-			}
+				await generateRandomWord(moment());
+			const tomorrow = await Days.exists({date: moment().add(1, 'd').format('YYYY-MM-DD')});
+			if (!tomorrow)
+				await generateRandomWord(moment().add(1, 'd'));
 			res.status(200).end();
 			resolve();
 		}

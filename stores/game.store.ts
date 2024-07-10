@@ -26,7 +26,7 @@ class GameStore
 	getTodayWord()
 	{
 		const gameState = localStorage.getItem("gameState");
-		if (!gameState || JSON.parse(gameState).day !== moment().format("YYYY-MM-DD"))
+		if (!gameState || JSON.parse(gameState).day !== moment().format("YYYY-MM-DD") || JSON.parse(gameState).dictionary_version !== process.env.DICTIONARY_VERSION)
 		{
 			fetch('/api/today').then(response => response.json()).then(todayWord =>
 			{
@@ -38,6 +38,7 @@ class GameStore
 					hardMode: false,
 					rowIndex: 0,
 					solution: todayWord,
+					dictionary_version: process.env.DICTIONARY_VERSION,
 				};
 				localStorage.setItem("gameState", JSON.stringify(this.state));
 			});

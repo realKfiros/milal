@@ -9,4 +9,5 @@ export interface GameState
 	hardMode: boolean;
 	rowIndex: number;
 	solution: string;
+	dictionary_version?: string;
 }
